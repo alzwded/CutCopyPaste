@@ -163,14 +163,19 @@ table.directory td.snip a {
                         <a href="edit.pl?path=$qp"><input type="button" value="Add new snippet" /></a><span style="padding-left:25px">Current path:</span><span id="currentPath" style="font-family:monospace">$navLinks</span>
                     </td>
                     <td style="text-align:right">
+                        <form action="search.pl" method="GET">
                         <table style="width:100%">
                             <tr><td>
-                                <span style="display:block;min-width:200px;width:200px;max-width:200px;float:right"><input type="text" placeholder="search" style="width:100%"/></span>
+                                <span style="display:block;min-width:200px;width:200px;max-width:200px;float:right"><input name="q" type="text" placeholder="search" style="width:100%"/></span>
                             </tr></td>
                             <tr><td>
-                                <span style="display:block;min-width:200px;width:200px;max-width:200px;float:right"><input type="checkbox" />search inside code snippets</span>
+                                <span style="display:block;min-width:200px;width:200px;max-width:200px;float:right">
+                                    <!-- <input type="checkbox" />search inside code snippets -->
+                                    <input name="everywhere" type="checkbox" />search in all directories
+                                </span>
                             </td></td>
                         </table>
+                        </form>
                     </td>
                 </tr>
             </table>
