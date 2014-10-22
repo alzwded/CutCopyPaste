@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+    <title>Snippet Viewer - main.c</title>
+    <style>
+table.formThingy {
+    width:100%;
+}
+    </style>
+</head>
+<body>
+        <table class="formThingy">
+            <colgroup>
+                <col style="width:275px" />
+                <col style="min-width:800px"/>
+            </colgroup>
+            <tr>
+                <td><h1>main.c</h1></td>
+                <td style="text-align:right;min-width:200px">
+                    <a href="edit.pl?id=100"><input type="button" value="Edit"/></a>
+                    <input type="button" value="Delete" onclick="deleteForever()"/></td>
+            </tr>
+            <tr>
+                <td>Keywords:</td>
+                <td><input name="keywords" style="width:100%" type="text" readonly placeholder="enter a comma separated list of keywords (optional, but helps searching)" value="C,int,addition"/></td>
+            </tr>
+            <tr>
+                <td>Path:</td>
+                <td><input name="keywords" style="width:100%" type="text" readonly placeholder="please input a path" value="/Common/GeneralSnippets/" /></td>
+            </tr>
+            <tr>
+                <td>Code:</td>
+                <td />
+            </tr>
+            <tr><td colspan="2">
+                <pre><code name="code" style="width:auto;left:0px;right:0px;min-height:200px;font-family:monospace">int main() {
+    int x = 2 + 2;
+    return x;
+}</code></pre>
+            </td></tr>
+        </table>
+
+    <script>
+hljs.initHighlightingOnLoad()
+
+function deleteForever(e) {
+    if(window.confirm("Are you sure you want to permanently delete 'main.c'?")) {
+        // delete.pl should redirect back to index.pl with the current path
+        window.location.href = "delete.pl?id=100"
+    }
+}
+    </script>
+</body>
