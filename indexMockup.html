@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snippet directory</title>
+    <style>
+table.directory {
+    width: 100%;
+}
+
+table.directory td {
+    width: 100%;
+    cursor: pointer;
+    background-color: #CCC;
+}
+
+table.directory td.dir {
+}
+
+table.directory td.dir a {
+    text-decoration: none;
+    color: inherit;
+}
+
+table.directory td.snip {
+    background-color: #CDC;
+}
+
+table.directory td.snip a {
+    text-decoration: none;
+    color: inherit;
+}
+    </style>
+</head>
+<body>
+    <table style="width:100%">
+        <!-- meta controls -->
+        <tr><td>
+            <table style="width:100%">
+                <tr>
+                    <td style="width:50%">
+                        <a href="edit.pl?path=/General/CommonSnippets/"><input type="button" value="Add new snippet" /></a><span style="padding-left:25px">Current path:</span><span id="currentPath" style="font-family:monospace">/General/CommonSnippets/</span>
+                    </td>
+                    <td style="width:50%;text-align:right">
+                        <table style="width:100%">
+                            <tr><td>
+                                <span style="display:block;min-width:200px;width:200px;max-width:200px;float:right"><input type="text" placeholder="search" style="width:100%"/></span>
+                            </tr></td>
+                            <tr><td>
+                                <span style="display:block;min-width:200px;width:200px;max-width:200px;float:right"><input type="checkbox" />search inside code snippets</span>
+                            </td></td>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td></tr>
+        <!-- the actual directory -->
+        <tr><td>
+            <table class="directory">
+                <tr><td class="dir"><a href="?path=/General/CommonSnippets/">[.]</a></tr></td>
+                <tr><td class="dir"><a href="?path=/General/">[..]</a></tr></td>
+                <tr><td class="dir"><a href="?path=/General/CommonSnippets/C/">[C]</a></tr></td>
+                <tr><td class="snip"><a href="view.pl?id=123">gigi.pl</a></tr></td>
+                <tr><td class="snip"><a href="view.pl?id=321">francois.py</a></tr></td>
+            </table>
+        </td</tr>
+    </table>
+</body>
