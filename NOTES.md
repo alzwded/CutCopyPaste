@@ -174,8 +174,7 @@ Examples:
 | path                              | result                            |
 |-----------------------------------|-----------------------------------|
 | `example.com/index.pl`            | defaults to `path=/`              |
-| `example.com/index.pl?path=/`     | shows stuff under `/`             |
-| `example.com/index.pl?path=/C&language=C++` | shows stuff under `/C/` which is in the `C++` language |
+| `example.com/index.pl?path=/C/`   | shows stuff under `/C/`             |
 
 ### view.pl
 
