@@ -186,7 +186,7 @@ table.directory td.snip a {
                 $subDirHTML
                 $fileHTML
             </table>
-        </td</tr>
+        </td></tr>
     </table>
 </body>
 EOT
