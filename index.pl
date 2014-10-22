@@ -80,6 +80,21 @@ EOT
     }
 
     my $subDirHTML = "";
+    if($path ne "/") {
+        my $qp = uri_escape $path;
+        my @newPathElements = @pathElements;
+        shift @newPathElements;
+        pop @newPathElements;
+        my $parent = "/" . join("/", @newPathElements);
+        my $qparent = uri_escape $parent;
+
+        $subDirHTML .= <<"EOT" ;
+<tr><td class="dir"><a href="?path=$qp"><div>[.]</div></a></td></tr>
+EOT
+        $subDirHTML .= <<"EOT" ;
+<tr><td class="dir"><a href="?path=$parent"><div>[..]</div></a></td></tr>
+EOT
+    }
     foreach (sort keys %subDirs) {
         my $p = $_;
         my $qp = uri_escape "${path}$p/";

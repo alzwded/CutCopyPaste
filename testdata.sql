@@ -15,7 +15,8 @@ INSERT INTO snippets
     int x = 2 + 2;
     return x;
 }"),
-    (5, "stupid.txt", "/", "hello!");
+    (5, "stupid.txt", "/", "hello!"),
+    (6, "stupid.txt", "/a/b/c/", "hello!");
 
 INSERT INTO keywords
     (keyword, snippet_id)
