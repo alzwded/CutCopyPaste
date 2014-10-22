@@ -149,7 +149,7 @@ We need to optimize the following queries:
 
 ``` KeywordLink: {
     NAME: string, primary key
-    EntryID: uint, primary key
+    EntryID: uint, primary key, foreign key Entry.ID
 }
 ```
 
