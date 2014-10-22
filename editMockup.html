@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snippet Viewer - gigi.pl</title>
+    <style>
+table.formThingy {
+    width:100%;
+}
+    </style>
+</head>
+<body>
+    <form method="POST" name="addNewSnippet" action="save.pl">
+        <table class="formThingy">
+            <colgroup>
+                <col style="width:275px" />
+                <col style="min-width:800px"/>
+            </colgroup>
+            <tr>
+                <td><h1>Add a new snippet</h1></td>
+                <td style="text-align:right;min-width:200px"><input type="submit" value="Commit"/></td>
+            </tr>
+            <tr>
+                <td>Title:</td>
+                <td><input name="title" style="width:100%" type="text" placeholder="enter a name for your snippet" value="gigi.pl"/></td>
+            </tr>
+            <tr>
+                <td>Keywords:</td>
+                <td><input name="keywords" style="width:100%" type="text" placeholder="enter a comma separated list of keywords (optional, but helps searching)" value="C,int,addition"/></td>
+            </tr>
+            <tr>
+                <td>Language:</td>
+                <td><select name="language" style="width:100%">
+                        <option value="">&lt;autodetect&gt;</option>
+                        <option value="C++">C++</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Path:</td>
+                <td><input name="keywords" style="width:100%" type="text" placeholder="please input a path" value="/Common/GeneralSnippets/" /></td>
+            </tr>
+            <tr>
+                <td>Code:</td>
+                <td />
+            </tr>
+            <tr><td colspan="2">
+                <textarea name="code" style="width:100%;min-height:200px;font-family:monospace" placeholder="you code here">int main() {
+    int x = 2 + 2;
+    return x;
+}</textarea>
+            </td></tr>
+        </table>
+    </form>
+</body>
