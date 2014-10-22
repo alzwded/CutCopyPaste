@@ -3,8 +3,14 @@ package db;
 my %st = (
     getAll => "SELECT * FROM snippets ;",
     getById => "SELECT * FROM snippets WHERE id = ? ;",
+    getAllKeywords => "SELECT keyword FROM keywords WHERE snippet_id = ? ;",
     getUnderCurrentPath => "SELECT id,title, path FROM snippets WHERE path LIKE ? ;",
     deleteById => "DELETE FROM snippets WHERE id = ? ;",
+    insert => "INSERT INTO snippets (title, path, language, code) VALUES (?, ?, ?, ?);",
+    removeKeywords => "DELETE FROM keywords WHERE snippet_id = ? ;",
+    save => "UPDATE snippets SET title=?, path=?, language=?, code=? WHERE id = ? ;",
+    insertKeyword => "INSERT INTO keywords (keyword, snippet_id) VALUES (?, ?) ;",
+
 );
 
 my $dbh = undef;

@@ -24,6 +24,12 @@ my $id = $GETvars{id} or die 'missing id';
 # write template
 $db::sth->{getById}->execute($id);
 my $files = $db::sth->{getById}->fetchall_hashref("id");
+$db::sth->{getAllKeywords}->execute($id);
+my $kws = $db::sth->{getAllKeywords}->fetchall_arrayref([0]);
+my $keywords = join ", ", map { @{$_}[0] } @{$kws};
+
+my $file = $files->{$id};
+$file->{keywords} = $keywords;
 
 dowrite($files->{$id}); # TODO parameters
 
@@ -62,8 +68,9 @@ table.formThingy {
             <tr>
                 <td><div title="go to $file->{path}"><h1><a href="index.pl?path=$qp" style="color:black;text-decoration:none">$file->{title}</a></h1></div></td>
                 <td style="text-align:right;min-width:200px">
+                    <input type="button" style="margin-right:25px" value="Delete" onclick="deleteForever()"/>
                     <a href="edit.pl?id=$file->{id}"><input type="button" value="Edit"/></a>
-                    <input type="button" value="Delete" onclick="deleteForever()"/></td>
+                </td>
             </tr>
             <tr>
                 <td>Keywords:</td>

@@ -30,6 +30,11 @@ if(defined $id) {
     $db::sth->{getById}->execute($id);
     my $files = $db::sth->{getById}->fetchall_hashref("id");
     $file = $files->{$id};
+
+    $db::sth->{getAllKeywords}->execute($id);
+    my $kws = $db::sth->{getAllKeywords}->fetchall_arrayref([0]);
+    my $keywords = join ", ", map { @{$_}[0] } @{$kws};
+    $file->{keywords} = $keywords;
 }
 
 $file = {
@@ -114,7 +119,7 @@ table.formThingy {
             </tr> -->
             <tr>
                 <td>Path:</td>
-                <td><input name="keywords" style="width:100%" type="text" placeholder="please input a path" value="$file->{path}" /></td>
+                <td><input name="path" style="width:100%" type="text" placeholder="please input a path" value="$file->{path}" /></td>
             </tr>
             <tr>
                 <td>Code:</td>
