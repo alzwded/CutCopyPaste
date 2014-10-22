@@ -2,7 +2,9 @@ package db;
 
 my %st = (
     getAll => "SELECT * FROM snippets ;",
+    getById => "SELECT * FROM snippets WHERE id = ? ;",
     getUnderCurrentPath => "SELECT id,title, path FROM snippets WHERE path LIKE ? ;",
+    deleteById => "DELETE FROM snippets WHERE id = ? ;",
 );
 
 my $dbh = undef;
@@ -23,8 +25,8 @@ sub opendb {
 
     # open DB
     $dbh = DBI->connect("dbi:SQLite:dbname=".$ENV{CCPDATABASE}, '', '',
-            { AutoCommit => 0 })
-    or die 'can'."'".'t open database';
+            { AutoCommit => 0, RaiseError => 1 })
+            or die 'can'."'".'t open database';
     $dbh->commit(); # get out of transaction
         $dbh->do("PRAGMA foreign_keys = TRUE;");
 

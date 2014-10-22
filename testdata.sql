@@ -8,8 +8,13 @@ INSERT INTO snippets
     VALUES
     (1, "gigi.pl", "/perl/", "exit 0;"),
     (2, "francois.py", "/python/", "exit(0)"),
-    (3, "main.c", "/C/", "int main() {return 0;}"),
-    (4, "add.c", "/C/", "int main() {int x = 2 + 2;return x;}"),
+    (3, "main.c", "/C/", "int main() {
+    return 0;
+}"),
+    (4, "add.c", "/C/", "int main() {
+    int x = 2 + 2;
+    return x;
+}"),
     (5, "stupid.txt", "/", "hello!");
 
 INSERT INTO keywords

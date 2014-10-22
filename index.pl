@@ -44,6 +44,8 @@ exit 0;
 sub dowrite {
     my ($path, $files) = @_;
 
+    my $qp = uri_escape $path;
+
     # break path down
     my @pathElements = map { $_."/" } split /\//, $path;
     #print $#pathElements;
@@ -82,22 +84,26 @@ EOT
         my $p = $_;
         my $qp = uri_escape "${path}$p/";
         $subDirHTML .= <<"EOT" ;
-<tr><td class="dir"><a href="?path=$qp">[$p]</a></tr></td>
+<tr><td class="dir"><a href="?path=$qp"><div>[$p]</div></a></td></tr>
 EOT
     }
 
     my $fileHTML = "";
-    foreach (@filteredFiles) {
+    foreach (sort @filteredFiles) {
         my $file = $_;
         $fileHTML .= <<"EOT" ;
-<tr><td class="snip"><a href="view.pl?id=$file->{id}">$file->{title}</a></tr></td>
+<tr><td class="snip"><a href="view.pl?id=$file->{id}"><div>$file->{title}</div></a></td></tr>
 EOT
     }
 
     my $template = <<"EOT" ;
+Content-Type: text/html; charset=utf-8
+
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="60">
     <title>Snippet directory</title>
     <style>
 table.directory {
@@ -139,7 +145,7 @@ table.directory td.snip a {
             <table style="width:100%">
                 <tr>
                     <td style="">
-                        <a href="edit.pl?path=/General/CommonSnippets/"><input type="button" value="Add new snippet" /></a><span style="padding-left:25px">Current path:</span><span id="currentPath" style="font-family:monospace">$navLinks</span>
+                        <a href="edit.pl?path=$qp"><input type="button" value="Add new snippet" /></a><span style="padding-left:25px">Current path:</span><span id="currentPath" style="font-family:monospace">$navLinks</span>
                     </td>
                     <td style="text-align:right">
                         <table style="width:100%">
