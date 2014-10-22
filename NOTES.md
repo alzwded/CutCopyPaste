@@ -225,3 +225,12 @@ Examples:
 | `example.com/search.pl`           | shows the search page without results |
 | `example.com/search.pl?q=asd+qwe+lala` | shows the search page with results that match the query |
 | `example.com/search.pl?q=asd&path=/C/` | shows results that are filtered for path |
+
+XX - The configuration
+----------------------
+
+sqlite db dropped somewhere. The path will be determined via an env var.
+
+Have a Makefile that uses an env var to determine the deployment location copy the files over.
+
+Have a target in the Makefile to recreate the DB.
