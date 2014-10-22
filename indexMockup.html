@@ -29,6 +29,10 @@ table.directory td.snip a {
     text-decoration: none;
     color: inherit;
 }
+
+#currentPath a {
+    padding-left: 3px;
+}
     </style>
 </head>
 <body>
@@ -38,7 +42,7 @@ table.directory td.snip a {
             <table style="width:100%">
                 <tr>
                     <td style="width:50%">
-                        <a href="edit.pl?path=/General/CommonSnippets/"><input type="button" value="Add new snippet" /></a><span style="padding-left:25px">Current path:</span><span id="currentPath" style="font-family:monospace">/General/CommonSnippets/</span>
+                        <a href="edit.pl?path=/General/CommonSnippets/"><input type="button" value="Add new snippet" /></a><span style="padding-left:25px">Current path:</span><span id="currentPath" style="font-family:monospace"><a href="?path=/">/</a><a href="?path=/General/">General/</a><a href="?path=/General/CommonSnippets/">CommonSnippets/</a></span>
                     </td>
                     <td style="width:50%;text-align:right">
                         <table style="width:100%">
