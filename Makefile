@@ -1,9 +1,8 @@
 deploy:
-	sudo ./deploy.csh
+	sudo -E ./deploy.csh
 
-CutCopyPasteDB.sqlite: schema.sql
-	# TODO
-	exit 3
+CutCopyPasteDB.sqlite3: schema.sql testdata.sql
+	./buildDB.csh
 
 clean:
 	rm -f CutCopyPasteDB.sqlite
