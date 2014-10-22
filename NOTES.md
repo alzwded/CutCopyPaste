@@ -136,9 +136,10 @@ We need to optimize the following queries:
 
 ### Schema
 
-*as a side note: the multimarkdown implementation I use breaks if there's a blank line in the middle of it (for some reason)*
+*as a side note: the multimarkdown implementation I use breaks if there's a blank line in the middle of it (for some reason); also, there's a serious incompatibility between this and github's*
 
-``` Entry: {
+```
+Entry: {
     ID: uint, primary key
     TITLE: string
     PATH: string
@@ -147,7 +148,8 @@ We need to optimize the following queries:
 }
 ```
 
-``` KeywordLink: {
+```
+KeywordLink: {
     NAME: string, primary key
     EntryID: uint, primary key, foreign key Entry.ID
 }
