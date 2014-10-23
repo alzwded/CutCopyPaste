@@ -15,6 +15,7 @@ my $s = "";
 read STDIN, $s, $CLEN;
 my %GETvars = map {
                   my $s = $_;
+                  $s =~ s/\+/ /g;
                   my $pos = index $s, "=";
                   my $key = substr $s, 0, $pos;
                   my $value = uri_unescape(substr $s, $pos + 1);
@@ -35,8 +36,9 @@ my $file = {
     language => $GETvars{language} || "",
 };
 
+$file->{code} =~ s///g;
+
 foreach my $key (keys %{$file}) {
-    $file->{$key} =~ s/\+/%20/g;
     $file->{$key} = uri_unescape($file->{$key});
 }
 

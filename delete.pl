@@ -12,6 +12,7 @@ my $dbh = db::opendb();
 # get variables
 my %GETvars = map {
                   my $s = $_;
+                  $s =~ s/\+//g;
                   my $pos = index $s, "=";
                   my $key = substr $s, 0, $pos;
                   my $value = uri_unescape(substr $s, $pos + 1);

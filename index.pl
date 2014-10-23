@@ -167,12 +167,12 @@ table.directory td.snip a {
                         <input name="path" type="hidden" value="$path" />
                         <table style="width:100%">
                             <tr><td>
-                                <span style="display:block;min-width:200px;width:200px;max-width:200px;float:right"><input name="q" type="text" placeholder="search" style="width:100%"/></span>
+                                <span style="display:block;min-width:200px;width:200px;max-width:200px;float:right"><input name="q" type="text" placeholder="search in current directory" style="width:100%"/></span>
                             </tr></td>
                             <tr><td>
                                 <span style="display:block;min-width:200px;width:200px;max-width:200px;float:right">
                                     <!-- <input type="checkbox" />search inside code snippets -->
-                                    <input name="everywhere" type="checkbox" />search in all directories
+                                    <!-- <input name="everywhere" type="checkbox" />search in all directories-->
                                 </span>
                             </td></td>
                         </table>
