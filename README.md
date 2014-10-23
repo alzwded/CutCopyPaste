@@ -66,6 +66,6 @@ You can now go to `http://*machinename*:*portnumber*` (e.g. `http://localhost:80
 Example deployment on linux
 ---------------------------
 
-TODO not implemented
+TODO write this section
 
 Well, it's actually very similar to the windows deployment, it's just that you can install everything using your distro's package manager and perl can source modules straight from the /var/www directory; you also need to set some r/w permissions for the database in addition; also, the configuration may or may not be based on `systemd` or using modern `rc.d` scripts. You can figure it out. It's linux, everything's easy if you know vim or emacs personally.
