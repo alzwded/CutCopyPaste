@@ -4,7 +4,6 @@ use CGI::Carp qw/fatalsToBrowser/;
 use strict;
 use Data::Dumper;
 use URI::Escape;
-use Path::Class qw(file);
 
 use db;
 

@@ -10,6 +10,8 @@ my %st = (
     removeKeywords => "DELETE FROM keywords WHERE snippet_id = ? ;",
     save => "UPDATE snippets SET title=?, path=?, language=?, code=? WHERE id = ? ;",
     insertKeyword => "INSERT INTO keywords (keyword, snippet_id) VALUES (?, ?) ;",
+    searchMatchingTitle => "SELECT * FROM snippets WHERE path LIKE ? AND title LIKE ? ;",
+    keywordHit => "SELECT * FROM snippets WHERE path LIKE ? AND id IN (SELECT snippet_id FROM keywords WHERE keyword LIKE ?);",
 
 );
 
