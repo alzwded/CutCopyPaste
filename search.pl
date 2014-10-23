@@ -138,7 +138,7 @@ sub dowrite {
         $rebuiltPath .= $p;
         my $qp = uri_escape($rebuiltPath);
         $navLinks .= <<"EOT" ;
-<a href="?path=$qp">$p</a>
+<a href="?q=$q&path=$qp">$p</a>
 EOT
     }
 
