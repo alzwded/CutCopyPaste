@@ -4,6 +4,7 @@ use CGI::Carp qw/fatalsToBrowser/;
 use strict;
 use Data::Dumper;
 use URI::Escape;
+use Path::Class qw(file);
 
 use db;
 
@@ -16,10 +17,10 @@ my %GETvars = map {
                   my $key = substr $s, 0, $pos;
                   my $value = uri_unescape(substr $s, $pos + 1);
                   $key => $value
-              } split /\&/, $ENV{QUERY_STRING};
+              } split /\&/, ($ENV{QUERY_STRING} or "");
 #print Dumper \%GETvars;
 
-my $path = $GETvars{path} or "/";
+my $path = $GETvars{path} || "/";
 $path =~ s#/+#/#g;
 if($path ne "/" && $path !~ m#^/..*/$#) {
     if($path !~ m#^.*/$#) {
