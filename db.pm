@@ -56,6 +56,8 @@ sub closedb {
         delete $sth->{$key};
     }
     $dbh->disconnect();
+
+    $dbh = undef;
 }
 
 1;
