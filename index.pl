@@ -12,6 +12,7 @@ my $dbh = db::opendb();
 # get variables
 my %GETvars = map {
                   my $s = $_;
+                  $s =~ s/\+/ /g;
                   my $pos = index $s, "=";
                   my $key = substr $s, 0, $pos;
                   my $value = uri_unescape(substr $s, $pos + 1);
@@ -20,7 +21,6 @@ my %GETvars = map {
 #print Dumper \%GETvars;
 
 my $path = $GETvars{path} || "/";
-$path =~ s#/+#/#g;
 if($path ne "/" && $path !~ m#^/..*/$#) {
     if($path !~ m#^.*/$#) {
         $path .= "/";
@@ -164,6 +164,7 @@ table.directory td.snip a {
                     </td>
                     <td style="text-align:right">
                         <form action="search.pl" method="GET">
+                        <input name="path" type="hidden" value="$path" />
                         <table style="width:100%">
                             <tr><td>
                                 <span style="display:block;min-width:200px;width:200px;max-width:200px;float:right"><input name="q" type="text" placeholder="search" style="width:100%"/></span>

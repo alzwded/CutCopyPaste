@@ -12,6 +12,7 @@ my $dbh = db::opendb();
 # get variables
 my %GETvars = map {
                   my $s = $_;
+                  $s =~ s/\+/ /g;
                   my $pos = index $s, "=";
                   my $key = substr $s, 0, $pos;
                   my $value = uri_unescape(substr $s, $pos + 1);
@@ -20,7 +21,6 @@ my %GETvars = map {
 #print Dumper \%GETvars;
 
 my $path = $GETvars{path} || "/";
-$path =~ s#/+#/#g;
 if($path ne "/" && $path !~ m#^/..*/$#) {
     if($path !~ m#^.*/$#) {
         $path .= "/";
@@ -31,11 +31,17 @@ if($path ne "/" && $path !~ m#^/..*/$#) {
 }
 
 my $q = $GETvars{q};
-print Dumper $q;
-my @qs = map { split /\s+/, $_ } map { my $nq = $_; $nq =~ s/^\s+//; $nq =~ s/\s+$//; $nq } split /,/, $q;
-print Dumper \@qs;
+#print Dumper $q;
+my @qs = map { split /\s+/, $_ } map { my $nq = $_; $nq =~ s/^\s+//; $nq =~ s/\s+$//; $nq } split /,/, $q if defined $q;
+#print Dumper \@qs;
 my $everywhere = $GETvars{everywhere};
 if(defined($everywhere) && $everywhere eq "on") { $path = "/" }
+
+if(!defined $q || $q eq "") {
+    dowrite($path, [], defined($everywhere) && $everywhere eq "on", "");
+    db::closedb();
+    exit 0;
+}
 
 # execute queries and whatnot
 # 1. matching title
@@ -49,7 +55,7 @@ push @reses, $db::sth->{searchMatchingTitle}->fetchall_hashref("id");
 my $query = "SELECT * FROM snippets WHERE path LIKE ? AND (";
 my @queryParams = ("$path%");
 my $cnt = $#qs;
-print "$cnt\n";
+#print "$cnt\n";
 while($cnt >= 0) {
     $query .= "OR " unless $cnt == $#qs;
     $query .= "title LIKE ? ";
@@ -57,8 +63,8 @@ while($cnt >= 0) {
     $cnt--;
 }
 $query .= ");";
-print Dumper $query;
-print Dumper \@queryParams;
+#print Dumper $query;
+#print Dumper \@queryParams;
 my $preppedQuery = $dbh->prepare($query);
 $preppedQuery->execute(@queryParams);
 push @reses, $preppedQuery->fetchall_hashref("id");
@@ -99,12 +105,10 @@ foreach (@reses) {
     }
 }
 
-
-print Dumper \@reses;
-exit;
+#print Dumper \@reses;
 
 # write template
-dowrite($path, \@reses);
+dowrite($path, \@reses, defined($everywhere) && $everywhere eq "on", $q);
 
 # cleanup
 
@@ -112,7 +116,12 @@ db::closedb();
 exit 0;
 
 sub dowrite {
-    my ($path, $files) = @_;
+    my ($path, $fileses, $isItChecked, $q) = @_;
+
+    my $isItCheckedOrNot = "";
+    if($isItChecked) {
+        $isItCheckedOrNot = "checked";
+    }
 
     my $qp = uri_escape $path;
 
@@ -136,49 +145,15 @@ EOT
     # generate file content
     # - extract subdirectories
     # - filter files to only current directory
-
-    my %subDirs = ();
-    my @filteredFiles = ();
-
-    foreach (keys %{$files}) {
-        my $file = $files->{$_};
-        if($file->{path} =~ m#^${path}([^/]*)/.*$#) {
-            $subDirs{$1} = 1;
-        } elsif($file->{path} =~ m#^${path}([^/]*)$#) {
-            push @filteredFiles, $file;
-        }
-    }
-
-    my $subDirHTML = "";
-    if($path ne "/") {
-        my $qp = uri_escape $path;
-        my @newPathElements = @pathElements;
-        shift @newPathElements;
-        pop @newPathElements;
-        my $parent = "/" . join("/", @newPathElements);
-        my $qparent = uri_escape $parent;
-
-        $subDirHTML .= <<"EOT" ;
-<tr><td class="dir"><a href="?path=$qp"><div>[.]</div></a></td></tr>
-EOT
-        $subDirHTML .= <<"EOT" ;
-<tr><td class="dir"><a href="?path=$parent"><div>[..]</div></a></td></tr>
-EOT
-    }
-    foreach (sort keys %subDirs) {
-        my $p = $_;
-        my $qp = uri_escape "${path}$p/";
-        $subDirHTML .= <<"EOT" ;
-<tr><td class="dir"><a href="?path=$qp"><div>[$p]</div></a></td></tr>
-EOT
-    }
-
     my $fileHTML = "";
-    foreach (sort @filteredFiles) {
-        my $file = $_;
-        $fileHTML .= <<"EOT" ;
+    foreach (@{$fileses}) {
+        my $files = $_;
+        foreach (keys %{$files}) {
+            my $file = $files->{$_};
+            $fileHTML .= <<"EOT" ;
 <tr><td class="snip"><a href="view.pl?id=$file->{id}"><div>$file->{title}</div></a></td></tr>
 EOT
+        }
     }
 
     my $template = <<"EOT" ;
@@ -230,18 +205,19 @@ table.directory td.snip a {
             <table style="width:100%">
                 <tr>
                     <td style="">
-                        <a href="edit.pl?path=$qp"><input type="button" value="Add new snippet" /></a><span style="padding-left:25px">Current path:</span><span id="currentPath" style="font-family:monospace">$navLinks</span>
+                        <a href="index.pl?path=$qp" style="color:black;text-decoration:none"><span><h1>back to index</h1></span></a><span style="padding-left:25px">Current path:</span><span id="currentPath" style="font-family:monospace">$navLinks</span>
                     </td>
                     <td style="text-align:right">
                         <form action="search.pl" method="GET">
+                        <input name="path" type="hidden" value="$path" />
                         <table style="width:100%">
                             <tr><td>
-                                <span style="display:block;min-width:200px;width:200px;max-width:200px;float:right"><input name="q" type="text" placeholder="search" style="width:100%"/></span>
+                                <span style="display:block;min-width:200px;width:200px;max-width:200px;float:right"><input name="q" type="text" placeholder="search" style="width:100%" value="$q"/></span>
                             </tr></td>
                             <tr><td>
                                 <span style="display:block;min-width:200px;width:200px;max-width:200px;float:right">
                                     <!-- <input type="checkbox" />search inside code snippets -->
-                                    <input name="everywhere" type="checkbox" />search in all directories
+                                    <input name="everywhere" type="checkbox" $isItCheckedOrNot/>search in all directories
                                 </span>
                             </td></td>
                         </table>
@@ -253,7 +229,6 @@ table.directory td.snip a {
         <!-- the actual directory -->
         <tr><td>
             <table class="directory">
-                $subDirHTML
                 $fileHTML
             </table>
         </td></tr>
