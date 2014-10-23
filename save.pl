@@ -38,6 +38,12 @@ my $file = {
 
 $file->{code} =~ s///g;
 
+my $tpah = $file->{path};
+if($tpah !~ m#^/.*#) { $tpah = "/" . $tpah; }
+if($tpah !~ m#.*/$#) { $tpah = $tpah . "/"; }
+$tpah =~ s#/+#/#g;
+$file->{path} = $tpah;
+
 foreach my $key (keys %{$file}) {
     $file->{$key} = uri_unescape($file->{$key});
 }
