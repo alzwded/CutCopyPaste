@@ -123,7 +123,7 @@ sub dowrite {
         $isItCheckedOrNot = "checked";
     }
 
-    my $qp = uri_escape $path;
+    my $qp = $path; #uri_escape $path;
 
     # break path down
     my @pathElements = map { $_."/" } split /\//, $path;
@@ -136,7 +136,7 @@ sub dowrite {
     foreach (@pathElements) {
         my $p = $_;
         $rebuiltPath .= $p;
-        my $qp = uri_escape($rebuiltPath);
+        my $qp = $rebuiltPath; #uri_escape($rebuiltPath);
         $navLinks .= <<"EOT" ;
 <a href="?q=$q&path=$qp">$p</a>
 EOT

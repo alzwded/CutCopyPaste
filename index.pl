@@ -44,7 +44,7 @@ exit 0;
 sub dowrite {
     my ($path, $files) = @_;
 
-    my $qp = uri_escape $path;
+    my $qp = $path; #uri_escape $path;
 
     # break path down
     my @pathElements = map { $_."/" } split /\//, $path;
@@ -57,7 +57,7 @@ sub dowrite {
     foreach (@pathElements) {
         my $p = $_;
         $rebuiltPath .= $p;
-        my $qp = uri_escape($rebuiltPath);
+        my $qp = $rebuiltPath; #uri_escape($rebuiltPath);
         $navLinks .= <<"EOT" ;
 <a href="?path=$qp">$p</a>
 EOT
@@ -81,12 +81,12 @@ EOT
 
     my $subDirHTML = "";
     if($path ne "/") {
-        my $qp = uri_escape $path;
+        my $qp = $path; #uri_escape $path;
         my @newPathElements = @pathElements;
         shift @newPathElements;
         pop @newPathElements;
         my $parent = "/" . join("/", @newPathElements);
-        my $qparent = uri_escape $parent;
+        my $qparent = $parent; #uri_escape $parent;
 
         $subDirHTML .= <<"EOT" ;
 <tr><td class="dir"><a href="?path=$qp"><div>[.]</div></a></td></tr>
@@ -97,7 +97,7 @@ EOT
     }
     foreach (sort keys %subDirs) {
         my $p = $_;
-        my $qp = uri_escape "${path}$p/";
+        my $qp = "${path}$p/"; #uri_escape "${path}$p/";
         $subDirHTML .= <<"EOT" ;
 <tr><td class="dir"><a href="?path=$qp"><div>[$p]</div></a></td></tr>
 EOT

@@ -57,7 +57,7 @@ exit 0;
 sub dowrite {
     my ($file) = @_;
 
-    my $qp = uri_escape $file->{path};
+    my $qp = $file->{path}; #uri_escape $file->{path};
 
     my $id = $file->{id};
     my $title = $file->{title};
