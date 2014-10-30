@@ -72,9 +72,10 @@ EOT
 
     foreach (keys %{$files}) {
         my $file = $files->{$_};
-        if($file->{path} =~ m#^${path}([^/]*)/.*$#) {
+        my $superQuotedPath = quotemeta $path;
+        if($file->{path} =~ m#^${superQuotedPath}([^/]*)/.*$#) {
             $subDirs{$1} = 1;
-        } elsif($file->{path} =~ m#^${path}([^/]*)$#) {
+        } elsif($file->{path} =~ m#^${superQuotedPath}([^/]*)$#) {
             push @filteredFiles, $file;
         }
     }
